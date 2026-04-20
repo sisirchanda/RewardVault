@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* Brand tokens */
+  --vault-green:   #16a34a;
+  --vault-green-l: #22c55e;
+  --vault-gold:    #f59e0b;
+  --vault-cream:   #fafaf7;
+  --vault-ink:     #18170f;
+  --vault-muted:   #6b6960;
+  --vault-border:  #e4e3de;
+  --vault-card:    #ffffff;
+
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  32px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--vault-cream);
+  color: var(--vault-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d6d5cf; border-radius: 99px; }
+
+/* Typography */
+h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.2; }
+
+/* Focus */
+*:focus-visible {
+  outline: 2px solid var(--vault-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(-1deg); }
+  50%     { transform: translateY(-10px) rotate(1deg); }
+}
+@keyframes countUp {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.animate-fade-up  { animation: fadeUp 0.6s ease both; }
+.animate-fade-in  { animation: fadeIn 0.4s ease both; }
+.animate-float    { animation: float 5s ease-in-out infinite; }
+
+/* Stagger delays */
+.delay-100 { animation-delay:0.1s; }
+.delay-200 { animation-delay:0.2s; }
+.delay-300 { animation-delay:0.3s; }
+.delay-400 { animation-delay:0.4s; }
+.delay-500 { animation-delay:0.5s; }
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #efefeb 25%, #fafaf8 50%, #efefeb 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+/* Glass card */
+.card-glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Vault button */
+.btn-vault {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--vault-green);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-vault:hover  { background: #15803d; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(22,163,74,0.3); }
+.btn-vault:active { transform: translateY(0); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: transparent;
+  color: var(--vault-ink);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  border: 1.5px solid var(--vault-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.btn-outline:hover { border-color: var(--vault-green); color: var(--vault-green); background: #f0fdf4; }
+
+/* Status badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.badge-pending   { background:#fef9c3; color:#854d0e; }
+.badge-confirmed { background:#dcfce7; color:#166534; }
+.badge-paid      { background:#dbeafe; color:#1d4ed8; }
+.badge-rejected  { background:#fee2e2; color:#991b1b; }
+
+/* Input */
+.input-vault {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background: #fff;
+  border: 1.5px solid var(--vault-border);
+  border-radius: var(--radius-md);
+  color: var(--vault-ink);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.input-vault:focus { border-color: var(--vault-green); box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
+.input-vault::placeholder { color: var(--vault-muted); }
+
+/* Card */
+.card {
+  background: var(--vault-card);
+  border: 1px solid var(--vault-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+/* Section title */
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vault-green);
+}
+
+/* Cashback pill */
+.cashback-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+/* Number display */
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  animation: countUp 0.5s ease both;
+}
+
+/* Merchant card hover */
+.merchant-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.merchant-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
