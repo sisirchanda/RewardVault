@@ -1,0 +1,13 @@
+# Packages
+backend/package-lock.json
+frontend/package-lock.json
+
+
+# Dependencies
+backend/node_modules
+frontend/node_modules
+frontend/.next
+
+# Environment Variables (Security!)
+backend/.env
+backend/.env.example
