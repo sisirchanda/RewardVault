@@ -23,7 +23,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(u);
     } catch {
       setUser(null);
-    }
+    } finally {
+	  setLoading(false);
+	}
+		
   }
 
   useEffect(() => {

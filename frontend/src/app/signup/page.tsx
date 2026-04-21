@@ -1,14 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { AuthProvider } from '@/hooks/useAuth';
 import { api, setToken } from '@/lib/api';
 import { Eye, EyeOff, Check, ArrowRight } from 'lucide-react';
 
 function SignupInner() {
-  const router = useRouter();
   const params = useSearchParams();
 
   const [step, setStep] = useState<'signup' | 'otp'>('signup');
@@ -47,7 +45,7 @@ function SignupInner() {
     try {
       const res: any = await api.auth.verifyOTP({ email: form.email, otp });
       setToken(res.token);
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setError(err.message || 'Invalid code');
     } finally {
@@ -208,9 +206,5 @@ function SignupInner() {
 }
 
 export default function SignupPage() {
-  return (
-    <AuthProvider>
-      <SignupInner />
-    </AuthProvider>
-  );
+  return <SignupInner />;
 }

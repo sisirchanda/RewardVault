@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { AuthProvider } from '@/hooks/useAuth';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import MerchantCard from '@/components/merchant/MerchantCard';
@@ -71,7 +70,7 @@ export default function MerchantsPage() {
   const activeCategory = categories.find(c => c.slug === category);
 
   return (
-    <AuthProvider>
+    <>
       <Navbar />
       <main style={{ paddingTop: 64, minHeight: '100vh' }}>
 
@@ -212,6 +211,6 @@ export default function MerchantsPage() {
       <style>{`
         @media (max-width: 768px) { .sidebar-hide { display: none; } }
       `}</style>
-    </AuthProvider>
+    
   );
 }

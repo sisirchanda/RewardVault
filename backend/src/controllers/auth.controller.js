@@ -95,6 +95,9 @@ async function login(req, res) {
     [email.toLowerCase()]
   );
   const user = result.rows[0];
+  
+  console.log("3. User Given Passowrd:", password);
+  console.log("3. Data base Pass:", user.password_hash);
 
   if (!user || !(await bcrypt.compare(password, user.password_hash))) {
     return res.status(401).json({ error: 'Invalid email or password' });

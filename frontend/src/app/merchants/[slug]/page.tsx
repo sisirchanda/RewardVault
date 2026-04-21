@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { AuthProvider, useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { api, Merchant } from '@/lib/api';
@@ -17,7 +17,6 @@ const EMOJI_MAP: Record<string, string> = {
 
 function MerchantDetailInner({ slug }: { slug: string }) {
   const { user } = useAuth();
-  const router = useRouter();
   const [merchant, setMerchant] = useState<Merchant | null>(null);
   const [loading, setLoading] = useState(true);
   const [clicking, setClicking] = useState(false);
@@ -27,13 +26,13 @@ function MerchantDetailInner({ slug }: { slug: string }) {
   useEffect(() => {
     api.merchants.get(slug)
       .then(setMerchant)
-      .catch(() => router.push('/merchants'))
+      .catch(() => { window.location.href = '/merchants'; })
       .finally(() => setLoading(false));
-  }, [slug, router]);
+  }, [slug]);
 
   async function handleGetCashback() {
     if (!user) {
-      router.push(`/login?redirect=/merchants/${slug}`);
+      window.location.href = `/login?redirect=/merchants/${slug}`;
       return;
     }
     if (!merchant) return;
@@ -207,13 +206,13 @@ function MerchantDetailInner({ slug }: { slug: string }) {
 export default function MerchantDetailPage() {
   const params = useParams();
   return (
-    <AuthProvider>
+    <>
       <Navbar />
       <main style={{ minHeight: '100vh', background: 'var(--vault-cream)' }}>
         <MerchantDetailInner slug={params.slug as string}/>
       </main>
       <Footer />
-    </AuthProvider>
+    </>
   );
 }
 

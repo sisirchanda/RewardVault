@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+
 import Link from 'next/link';
-import { AuthProvider, useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import Navbar from '@/components/layout/Navbar';
 import { api, Transaction, Wallet } from '@/lib/api';
 import { TrendingUp, Clock, DollarSign, Download, ChevronRight, ArrowUpRight } from 'lucide-react';
@@ -17,14 +17,13 @@ const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }>
 
 function DashboardInner() {
   const { user, loading: authLoading } = useAuth();
-  const router = useRouter();
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [txs, setTxs] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!authLoading && !user) router.push('/login?redirect=/dashboard');
-  }, [user, authLoading, router]);
+    if (!authLoading && !user) window.location.href = '/login?redirect=/dashboard';
+  }, [user, authLoading]);
 
   useEffect(() => {
     if (!user) return;
@@ -219,12 +218,12 @@ function DashboardInner() {
 
 export default function DashboardPage() {
   return (
-    <AuthProvider>
+    <>
       <Navbar />
       <main style={{ minHeight: '100vh', background: 'var(--vault-cream)' }}>
         <DashboardInner />
       </main>
-    </AuthProvider>
+    </>
   );
 }
 
